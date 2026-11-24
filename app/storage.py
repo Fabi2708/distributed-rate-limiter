@@ -15,3 +15,9 @@ class Storage:
 
     def save_bucket(self, client_ip, bucket):
         self.storage[client_ip] = bucket
+
+    def allow_request(self,client_ip):
+        bucket = self.get_bucket(client_ip)
+        allowed =  bucket.consume()
+        self.save_bucket(client_ip,bucket)
+        return allowed
