@@ -1,4 +1,5 @@
 from app.storage import Storage
+from app.redis_storage import RedisStorage
 
 class RateLimiter:
     def __init__(self,storage):
@@ -6,4 +7,6 @@ class RateLimiter:
 
     def allow_request(self,client_ip):
         bucket = self.storage.get_bucket(client_ip)
-        return bucket.consume()
+        allowed =  bucket.consume()
+        self.storage.save_bucket(client_ip,bucket)
+        return allowed

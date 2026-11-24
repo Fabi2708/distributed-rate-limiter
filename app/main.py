@@ -2,8 +2,9 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from app.rateLimiter import RateLimiter
 from app.storage import Storage
+from app.redis_storage import RedisStorage
 
-storage = Storage()
+storage = RedisStorage()
 rate_limiter = RateLimiter(storage)
 app = FastAPI()
 

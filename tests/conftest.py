@@ -3,4 +3,5 @@ from app.main import storage
 
 @pytest.fixture(autouse=True)
 def reset_storage():
-    storage.storage.clear()
+    # storage.storage.clear()
+    storage.redis.flushdb()

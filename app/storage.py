@@ -9,6 +9,9 @@ class Storage:
         if client_ip in self.storage:
             return self.storage[client_ip]
         else:
-            bucket = TokenBucket(2,time.perf_counter())
+            bucket = TokenBucket(2,2,time.perf_counter())
             self.storage[client_ip] = bucket
             return bucket
+
+    def save_bucket(self, client_ip, bucket):
+        self.storage[client_ip] = bucket
