@@ -18,21 +18,19 @@ A distributed rate limiter built with **Python, FastAPI, Redis, and Lua**. It im
 
 The application separates rate-limiting logic from storage, allowing different storage backends to be used without changing the rate limiter itself.
 
+```mermaid
 flowchart TD
     A["Client HTTP Request"] --> B["FastAPI Middleware"]
     B --> C["RateLimiter"]
     C --> D["RedisStorage"]
     D --> E["Registered Lua Script"]
-    E --> F[("Redis Hash<br/>Token Bucket State")]
-
-    F --> E
+    E <--> F[("Redis Hash: Token Bucket State")]
     E --> D
     D --> C
-    C --> B
+    C --> G{"Request allowed?"}
 
-    B --> G{"Request allowed?"}
-    G -->|Yes| H["Continue to API Endpoint<br/>HTTP 200"]
-    G -->|No| I["Reject Request<br/>HTTP 429"]
+    G -->|Yes| H["Continue to API Endpoint - HTTP 200"]
+    G -->|No| I["Reject Request - HTTP 429"]
 
     subgraph Docker["Docker Compose"]
         B
@@ -41,6 +39,7 @@ flowchart TD
         E
         F
     end
+```
 
 ### Components
 
