@@ -1,6 +1,7 @@
 from app.redis_storage import RedisStorage
 from app.redis_client import redis_client
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 def test_allow_request():
     storage = RedisStorage()
@@ -13,3 +14,18 @@ def test_allow_request():
     time.sleep(6)
     assert storage.allow_request(client_ip) is True
     redis_client.delete(redis_key)
+
+def test_Race_condition():
+    storage = RedisStorage()
+    client_ip = "192.168.1.10"
+    redis_key = f"rate_limit:{client_ip}"
+    redis_client.delete(redis_key)
+
+    client_list = [client_ip] * 20
+    results = []
+    
+    with ThreadPoolExecutor(max_workers=20) as executor:
+        for result in executor.map(storage.allow_request,client_list):
+            results.append(result)
+
+    assert sum(results) == 2

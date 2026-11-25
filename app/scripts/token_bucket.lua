@@ -32,4 +32,6 @@ redis.call(
     "timestamp", current_time
 )
 
+redis.call("EXPIRE", KEYS[1], tonumber(ARGV[1]))
+
 return allowed

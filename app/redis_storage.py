@@ -4,8 +4,9 @@ import time
 import os
 
 class RedisStorage:
-    def __init__(self):
+    def __init__(self,ttl_seconds=1800):
         self.redis = redis_client
+        self.ttl_seconds = ttl_seconds
         script_path = os.path.join(
             os.path.dirname(__file__),
             "scripts",
@@ -49,6 +50,7 @@ class RedisStorage:
 
         result = self.allow_script(
             keys=[redis_key],
+            args=[self.ttl_seconds],
             client=self.redis
         )
 
