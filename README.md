@@ -262,8 +262,9 @@ distributed-rate-limiter/
 ├── app/
 │   ├── scripts/
 │   │   └── token_bucket.lua
-│   ├── main.py
+│   ├── __init__.py
 │   ├── limiter.py
+│   ├── main.py
 │   ├── rateLimiter.py
 │   ├── redis_client.py
 │   ├── redis_storage.py
@@ -272,7 +273,12 @@ distributed-rate-limiter/
 ├── tests/
 │   ├── conftest.py
 │   ├── test_api.py
+│   ├── test_limiter.py
+│   ├── test_main.py
+│   ├── test_rate.py
+│   ├── test_redis_client.py
 │   ├── test_redis_storage.py
+│   ├── test_storage.py
 │   └── test_ttl.py
 │
 ├── scripts/
