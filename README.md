@@ -20,27 +20,14 @@ The application separates rate-limiting logic from storage, allowing different s
 
 ```mermaid
 flowchart TD
-    A["Client HTTP Request"] --> B["FastAPI Middleware"]
-    B --> C["RateLimiter"]
-    C --> D["RedisStorage"]
-    D --> E["Registered Lua Script"]
-    E <--> F[("Redis Hash: Token Bucket State")]
-    E --> D
-    D --> C
-    C --> G{"Request allowed?"}
-
-    G -->|Yes| H["Continue to API Endpoint - HTTP 200"]
-    G -->|No| I["Reject Request - HTTP 429"]
-
-    subgraph Docker["Docker Compose"]
-        B
-        C
-        D
-        E
-        F
-    end
+    A[Client Request] --> B[FastAPI Middleware]
+    B --> C[RateLimiter]
+    C --> D[RedisStorage]
+    D --> E[Redis + Lua Script]
+    E --> F{Allowed?}
+    F -->|Yes| G[HTTP 200]
+    F -->|No| H[HTTP 429]
 ```
-
 ### Components
 
 | Component | Responsibility |
