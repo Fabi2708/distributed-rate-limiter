@@ -273,15 +273,18 @@ distributed-rate-limiter/
 │   ├── conftest.py
 │   ├── test_api.py
 │   ├── test_redis_storage.py
-│   ├── test_ttl.py
-│   ├── test_benchmark.py
-│   └── test_ping_benchmark.py
+│   └── test_ttl.py
+│
+├── scripts/
+│   ├── load_test.py
+│   └── ping_benchmark.py
 │
 ├── .dockerignore
 ├── .env.example
 ├── .gitignore
 ├── Dockerfile
 ├── docker-compose.yml
+├── README.md
 └── requirements.txt
 ```
 
